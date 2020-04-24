@@ -1,0 +1,8 @@
+0	1	nodejs_module.sh	#
+1	1	python_install.sh	#
+2	1	init.sh	#
+3	1	function_export.sh	#
+4	1	wireless_driver.sh	#
+5	1	vim_setup.sh	#
+6	1	postgresql_install.sh	# The PostgreSQL apt repository supports the currently supported stable versions of Debian:
+7	1	java_install.sh	#
