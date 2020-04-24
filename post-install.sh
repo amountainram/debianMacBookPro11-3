@@ -3,15 +3,14 @@
 
 export log_file_name=logs.post-install.txt
 export log_shell=logs.shell.txt
-export local_dir=$(realpath .)
+export local_dir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 export app_name=$0
 export logs_dir=$local_dir/log
 export source_dir=$local_dir/src
 export conf_dir=$local_dir/config
+export module_dir=$local_dir/module
 
-remove_logs() { rm -rf $logs_dir/* 2>/dev/null ; exit 0 ; }
-help_message() { echo "to do"  ; exit 0 ; }
-
+# some functions - log schemas
 . $source_dir/function_export.sh
 
 # args handling
