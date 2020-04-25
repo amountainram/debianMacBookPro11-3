@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+
 print_list() {
 		echo -e "\n"
 		cat $FILE_CT | { while read -r line ;
@@ -16,12 +17,13 @@ print_list() {
 		echo -e "\n"
 }
 
-FILE_CT=$conf_dir/modules.conf.tmp
+FILE_CT=$tmp_dir/modules.tmp.conf
 if [[ -f "$FILE_CT" ]] ; then rm $FILE_CT ; fi
+
 sudo -u $un touch $FILE_CT
-modules_array=()
+
 counter=0
-find $source_dir -type f -iname "*.sh" | { while read -r line ;
+find $modules_dir -type f -iname "*.sh" | { while read -r line ;
 do
 		echo -e "$counter\t1\t$(basename $line)\t$(sed -n '2p' $line)" >> $FILE_CT ;
 		(( counter++ ))

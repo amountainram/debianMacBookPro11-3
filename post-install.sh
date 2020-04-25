@@ -2,16 +2,18 @@
 #
 
 export log_file_name=logs.post-install.txt
-export log_shell=logs.shell.txt
 export local_dir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+export LSF=$local_dir/logs.shell.txt.$(date +%s)
 export app_name=$0
 export logs_dir=$local_dir/log
 export source_dir=$local_dir/src
 export conf_dir=$local_dir/config
 export module_dir=$local_dir/module
+export tmp_dir=$local_dir/tmp
 
 # some functions - log schemas
 . $source_dir/function_export.sh
+. $conf_dir/module.conf.sh
 
 # args handling
 # Execute getopt on the arguments passed to this program, identified by the special character $@
@@ -39,7 +41,7 @@ do
 			fi
 			exit 0
 			shift;;
-		*) 
+		*)
 			shift
 			break;;
 	esac
@@ -55,25 +57,19 @@ fi
 
 export un=$(logname)
 export uhome=$( su $un -c "echo \$HOME" ) 
-
-source $conf_dir/module.conf.sh
-
-#
-# module 00 -- init
-# 	this contains:
-#		* the root check
-#		* creation/check of log files
-#
 . $source_dir/init.sh
-module_done "function_export"
+
+#
+echo -e "\xf0\x9f\x8d\xbb\t Let's go!"
+#
 
 #
 # module 01 -- wireless_driver
 # 	this contains:
 #		* 
 #
-#. $source_dir/wireless_driver.sh
-module_done "wireless_driver"
+#. $module_dir/wireless_driver.sh
+#module_done "wireless_driver"
 
 #
 # module 02 -- python_install
@@ -81,7 +77,7 @@ module_done "wireless_driver"
 #		* python pip and packages install
 #		* configuration of powerline
 #
-#. $source_dir/python_install.sh
+#. $module_dir/python_install.sh
 module_done "python_install"
 
 #
